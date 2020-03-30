@@ -1,9 +1,10 @@
 <template>
   <Page actionBarHidden="true">
     <ActionBar title="Welcome to NativeScript-Vue!"/>
-    <GridLayout columns="*" rows="*,*">
-      <Label class="message" :text="info" col="0" row="0"/>
-      <Label class="message" :class="{gravity: accReached}" :text="gravity" col="0" row="1"/>
+    <GridLayout columns="*" rows="*,*,*">
+      <Label class="message" text="TRUSTartup" col="0" row="0" />
+      <Label class="message" :text="info" col="0" row="1"/>
+      <Label class="message" :class="{gravity: accReached}" :text="gravity" col="0" row="2"/>
     </GridLayout>
   </Page>
 </template>
@@ -22,7 +23,6 @@ import {
 
 @Component({})
 export default class App extends Vue {
-  public msg = 'Hola mundo';
   public accelerometer = {
     x_data: null,
     y_data: null,
