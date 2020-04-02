@@ -20,6 +20,7 @@ import {
   AndroidSensorListener,
   SensorDelay,
 } from "nativescript-android-sensors";
+import SC from '../handlers';
 
 @Component({})
 export default class App extends Vue {
@@ -31,7 +32,7 @@ export default class App extends Vue {
   };
   public androidSensors: AndroidSensors;
   public accReached: Boolean = false;
-
+  public txt: string = '';
   constructor() {
     super();
     this.androidSensors = new AndroidSensors();
@@ -53,6 +54,10 @@ export default class App extends Vue {
       8000000,
     );
     this.androidSensors.setListener(mHWListener);
+    const sc = new SC();
+    sc.text.then((text) => {
+      this.txt = text;
+    });
   }
 
   get info(): String {
@@ -60,7 +65,7 @@ export default class App extends Vue {
   }
 
   get contractText(): String {
-    return "This is just a test";
+    return this.txt;
   }
 
   @Watch('gravity')

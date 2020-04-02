@@ -1,7 +1,7 @@
 import Vue from 'nativescript-vue';
 import App from './components/App.vue';
 import firebase from 'nativescript-plugin-firebase';
-import {web3} from './handlers';
+import {web3} from './handlers/index';
 
 import store from './store'
 import VueDevtools from 'nativescript-vue-devtools'
@@ -10,7 +10,7 @@ if (TNS_ENV !== 'production') {
   Vue.use(VueDevtools)
 }
 
-Vue.web3 = Vue.prototype.$web3 = web3;
+//Vue.web3 = Vue.prototype.$web3 = web3;
 
 firebase.init({})
   .catch((err) => {

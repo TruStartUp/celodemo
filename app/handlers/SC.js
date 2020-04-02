@@ -1,5 +1,5 @@
-import {web3} from './handlers';
-import scContract from './contracts/SC.json';
+import {web3} from '../handlers';
+import scContract from '../contracts/SC.json';
 import {config} from 'dotenv';
 
 config();
