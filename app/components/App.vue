@@ -1,9 +1,10 @@
 <template>
   <Page actionBarHidden="true">
     <ActionBar title="Welcome to NativeScript-Vue!"/>
-    <GridLayout columns="*" rows="*,*">
-      <Label class="message" :text="info" col="0" row="0"/>
-      <Label class="message" :class="{gravity: accReached}" :text="gravity" col="0" row="1"/>
+    <GridLayout columns="*" rows="*,*,*">
+      <Label class="message" :text="contractText" col="0" row="0"/>
+      <Label class="message" :text="info" col="0" row="1"/>
+      <Label class="message" :class="{gravity: accReached}" :text="gravity" col="0" row="2"/>
     </GridLayout>
   </Page>
 </template>
@@ -56,6 +57,10 @@ export default class App extends Vue {
 
   get info(): String {
     return `X: ${this.accelerometer.x_data} | Y: ${this.accelerometer.y_data} | Z: ${this.accelerometer.z_data}`;
+  }
+
+  get contractText(): String {
+    return "This is just a test";
   }
 
   @Watch('gravity')
