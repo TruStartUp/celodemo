@@ -18,7 +18,7 @@ android {
     minSdkVersion 21
     generatedDensities = []
     multiDexEnabled true
-    applicationId = "co.trustartup.celodemo"
+    applicationId = "co.trustartup.nsdemo"
   }
   aaptOptions {
     additionalParameters "--no-version-vectors"

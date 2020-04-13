@@ -8,7 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:249536971503:android:12ef201fec6fdc1521911a",
+        "mobilesdk_app_id": "1:249536971503:android:73c40369a4c813a921911a",
         "android_client_info": {
           "package_name": "co.trustartup.celodemo"
         }
@@ -37,9 +37,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:249536971503:android:9cb70eccb60b0e3d21911a",
+        "mobilesdk_app_id": "1:249536971503:android:cbc722e0d3b82d7e21911a",
         "android_client_info": {
-          "package_name": "co.trustartup.demoapp"
+          "package_name": "co.trustartup.nsdemo"
         }
       },
       "oauth_client": [

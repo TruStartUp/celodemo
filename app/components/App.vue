@@ -1,10 +1,17 @@
 <template>
-  <Page actionBarHidden="true">
+  <Page actionBarHidden="true" class="app">
     <ActionBar title="Welcome to NativeScript-Vue!"/>
-    <GridLayout columns="*" rows="*,*,*">
-      <Label class="message" text="TRUSTartup" col="0" row="0" />
-      <Label class="message" :text="info" col="0" row="1"/>
-      <Label class="message" :class="{gravity: accReached}" :text="gravity" col="0" row="2"/>
+    <GridLayout columns="*" rows="*,*">
+      <Label class="message" text="Move your phone to make the slider reach the dot" col="0" row="0"
+             textWrap="true"/>
+      <Slider value="0" @valueChange="match" col="0" row="1" v-model="sliderPosition"
+              backgroundColor="#fff"
+      />
+      <GridLayout rows="*" :columns="'* '.repeat(100).trim().split(' ').join(',')" col="0" row="1"
+                  class="gravity"
+                  width="93%">
+        <Image src="res://icon" row="0" :col="position" class="image"/>
+      </GridLayout>
     </GridLayout>
   </Page>
 </template>
@@ -15,11 +22,24 @@ import {
   Watch,
   Vue,
 } from 'vue-property-decorator';
+
 import {
   AndroidSensors,
   AndroidSensorListener,
   SensorDelay,
 } from "nativescript-android-sensors";
+
+import {
+  mapActions,
+  mapState,
+} from 'vuex';
+
+import {
+  Action,
+  State,
+} from 'vuex-class';
+
+import * as constants from '@/store/constants.js';
 
 @Component({})
 export default class App extends Vue {
@@ -30,6 +50,12 @@ export default class App extends Vue {
   };
   public androidSensors: AndroidSensors;
   public accReached: Boolean = false;
+  public sliderPosition: number = 0;
+
+  @State(state => state['Session'].position) position!: Number;
+  @State(state => state['Session'].fit) fit!: Boolean;
+  @Action(constants.SESSION_INIT) init;
+  @Action(constants.SESSION_SET_POSITION) setPosition;
 
   constructor() {
     super();
@@ -54,6 +80,18 @@ export default class App extends Vue {
     this.androidSensors.setListener(mHWListener);
   }
 
+  mounted() {
+    this.init();
+  }
+
+  match() {
+    this.setPosition(this.sliderPosition);
+  }
+
+  updatePosition() {
+    this.init();
+  }
+
   get info(): String {
     return `X: ${this.accelerometer.x_data} | Y: ${this.accelerometer.y_data} | Z: ${this.accelerometer.z_data}`;
   }
@@ -61,6 +99,20 @@ export default class App extends Vue {
   @Watch('gravity')
   onGravityChanged(newVal: Number, oldVal: Number) {
     this.accReached = newVal >= 13;
+  }
+
+  @Watch('fit')
+  onFitTrue(newVal: Boolean, oldVal: Boolean) {
+    if (newVal)
+      this.$goto('human');
+  }
+
+  @Watch('accelerometer.x_data')
+  onXChanged(newVal: Number, oldVal: Number) {
+    if (newVal < 0)
+      this.sliderPosition += 1;
+    else if (newVal > 0)
+      this.sliderPosition -= 1;
   }
 
   get gravity(): Number {
@@ -73,17 +125,26 @@ export default class App extends Vue {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
   ActionBar {
     background-color: #53ba82;
     color: #ffffff;
+  }
+
+  .app {
+    background-image: linear-gradient(#2b37a5, #050e57);
+    color: #fff;
+  }
+
+  .image {
+    width: 500%;
+    height: auto;
   }
 
   .message {
     vertical-align: center;
     text-align: center;
     font-size: 20;
-    color: #333333;
   }
 
   .gravity {
